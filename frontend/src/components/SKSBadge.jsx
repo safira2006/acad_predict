@@ -1,88 +1,89 @@
-import { BookCheck, Info } from 'lucide-react'
+// ═══════════════════════════════════════════════════════════════════════════
+// FILE: frontend/src/components/SKSBadge.jsx
+// DEVELOPER: Anak 7 (Frontend - Dashboard Components)
+// DESKRIPSI: Badge rekomendasi SKS dengan progress bar dan keterangan
+// ═══════════════════════════════════════════════════════════════════════════
 
-const SKS_CONFIG = {
-  24: {
-    color: 'from-emerald-500 to-green-600',
-    bg: 'bg-emerald-50 dark:bg-emerald-900/20',
-    border: 'border-emerald-200 dark:border-emerald-800',
-    text: 'text-emerald-800 dark:text-emerald-300',
-    label: 'Beban Penuh',
-    desc: 'IPK >= 3.5 — Mahasiswa berprestasi dapat mengambil beban maksimum',
-  },
-  23: {
-    color: 'from-blue-500 to-indigo-600',
-    bg: 'bg-blue-50 dark:bg-blue-900/20',
-    border: 'border-blue-200 dark:border-blue-800',
-    text: 'text-blue-800 dark:text-blue-300',
-    label: 'Beban Tinggi',
-    desc: 'IPK >= 3.0 — Performa sangat baik, dapat mengambil beban lebih',
-  },
-  22: {
-    color: 'from-yellow-500 to-amber-600',
-    bg: 'bg-yellow-50 dark:bg-yellow-900/20',
-    border: 'border-yellow-200 dark:border-yellow-800',
-    text: 'text-yellow-800 dark:text-yellow-300',
-    label: 'Beban Normal',
-    desc: 'IPK >= 2.5 — Beban SKS standar yang direkomendasikan',
-  },
-  21: {
-    color: 'from-red-500 to-rose-600',
-    bg: 'bg-red-50 dark:bg-red-900/20',
-    border: 'border-red-200 dark:border-red-800',
-    text: 'text-red-800 dark:text-red-300',
-    label: 'Beban Ringan',
-    desc: 'IPK < 2.5 — Disarankan mengambil beban lebih sedikit untuk fokus perbaikan',
-  },
-}
+// ─── STEP 1: IMPORT ───────────────────────────────────────────────────────────
+// Import { BookCheck, Info } dari 'lucide-react'
 
-export default function SKSBadge({ rekomendasi_sks, prediksi_ipk }) {
-  const config = SKS_CONFIG[rekomendasi_sks] || SKS_CONFIG[22]
+// ─── STEP 2: BUAT KONSTANTA SKS_CONFIG ───────────────────────────────────────
+// Buat object SKS_CONFIG dengan key angka SKS (24, 23, 22, 21).
+// Setiap key berisi object konfigurasi warna dan label:
+//
+// 24: {
+//   color: 'from-emerald-500 to-green-600',
+//   bg: 'bg-emerald-50 dark:bg-emerald-900/20',
+//   border: 'border-emerald-200 dark:border-emerald-800',
+//   text: 'text-emerald-800 dark:text-emerald-300',
+//   label: 'Beban Penuh',
+//   desc: 'IPK >= 3.5 — Mahasiswa berprestasi dapat mengambil beban maksimum',
+// }
+// 23: warna biru (from-blue-500 to-indigo-600), label: 'Beban Tinggi'
+//     desc: 'IPK >= 3.0 — Performa sangat baik, dapat mengambil beban lebih'
+// 22: warna kuning (from-yellow-500 to-amber-600), label: 'Beban Normal'
+//     desc: 'IPK >= 2.5 — Beban SKS standar yang direkomendasikan'
+// 21: warna merah (from-red-500 to-rose-600), label: 'Beban Ringan'
+//     desc: 'IPK < 2.5 — Disarankan mengambil beban lebih sedikit untuk fokus perbaikan'
 
-  return (
-    <div className={`card ${config.bg} border ${config.border} animate-slide-up`}>
-      <div className="flex items-start gap-4">
-        <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${config.color} flex items-center justify-center shadow-lg flex-shrink-0`}>
-          <BookCheck className="w-7 h-7 text-white" />
-        </div>
-        <div className="flex-1">
-          <div className="flex items-center gap-2 mb-1">
-            <h3 className="font-bold text-gray-900 dark:text-white">Rekomendasi SKS</h3>
-            <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${config.text} ${config.bg} border ${config.border}`}>
-              {config.label}
-            </span>
-          </div>
-          <div className="flex items-baseline gap-2 mb-2">
-            <span className={`text-5xl font-extrabold bg-gradient-to-r ${config.color} bg-clip-text text-transparent`}>
-              {rekomendasi_sks}
-            </span>
-            <span className="text-lg font-semibold text-gray-500 dark:text-gray-400">SKS</span>
-          </div>
-          <div className={`flex items-start gap-1.5 text-sm ${config.text}`}>
-            <Info className="w-4 h-4 mt-0.5 flex-shrink-0" />
-            <p>{config.desc}</p>
-          </div>
-        </div>
-        <div className="text-right flex-shrink-0">
-          <p className="text-xs text-gray-400 dark:text-gray-500 mb-1">Prediksi IPK</p>
-          <p className="text-2xl font-extrabold text-gray-900 dark:text-white tabular-nums">
-            {prediksi_ipk?.toFixed(2)}
-          </p>
-        </div>
-      </div>
+// ─── STEP 3: BUAT HELPER COMPONENT IPKBar (internal, tidak di-export) ─────────
+// Tidak perlu dibuat karena SKSBadge tidak menggunakan IPKBar.
+// Progress bar SKS dibuat langsung di dalam SKSBadge.
 
-      {/* Progress bar showing SKS relative to max 24 */}
-      <div className="mt-4">
-        <div className="flex justify-between text-xs text-gray-400 dark:text-gray-500 mb-1">
-          <span>Beban SKS</span>
-          <span>{rekomendasi_sks} / 24 SKS maksimum</span>
-        </div>
-        <div className="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-2.5 overflow-hidden">
-          <div
-            className={`h-full rounded-full bg-gradient-to-r ${config.color} transition-all duration-700`}
-            style={{ width: `${(rekomendasi_sks / 24) * 100}%` }}
-          />
-        </div>
-      </div>
-    </div>
-  )
-}
+// ─── STEP 4: BUAT DEFAULT EXPORT function SKSBadge ───────────────────────────
+// Props: { rekomendasi_sks, prediksi_ipk }
+//
+// Di dalam fungsi:
+// - Ambil config: const config = SKS_CONFIG[rekomendasi_sks] || SKS_CONFIG[22]
+//   (fallback ke 22 jika nilai tidak ada di config)
+//
+// Return JSX struktur berikut:
+
+// STEP 4a: Wrapper card
+// - class: `card ${config.bg} border ${config.border} animate-slide-up`
+// - Gunakan template literal agar class dinamis sesuai config
+
+// STEP 4b: Baris atas — flex items-start gap-4
+// Berisi 3 bagian:
+//
+//   [1] Icon container (w-14 h-14 rounded-2xl, gradient bg, shadow-lg, flex-shrink-0)
+//       - class bg: `bg-gradient-to-br ${config.color}`
+//       - Isi: <BookCheck className="w-7 h-7 text-white" />
+//
+//   [2] Info tengah (flex-1)
+//       - Baris judul: flex items-center gap-2 mb-1
+//         * <h3> "Rekomendasi SKS" (font-bold text-gray-900 dark:text-white)
+//         * Badge label: <span> dengan class `px-2 py-0.5 rounded-full text-xs font-bold
+//           ${config.text} ${config.bg} border ${config.border}`
+//           Isi: {config.label}
+//       - Angka SKS besar: flex items-baseline gap-2 mb-2
+//         * <span> angka: `text-5xl font-extrabold bg-gradient-to-r ${config.color}
+//           bg-clip-text text-transparent`  → Isi: {rekomendasi_sks}
+//         * <span> "SKS": text-lg font-semibold text-gray-500 dark:text-gray-400
+//       - Deskripsi: flex items-start gap-1.5 text-sm ${config.text}
+//         * <Info className="w-4 h-4 mt-0.5 flex-shrink-0" />
+//         * <p>{config.desc}</p>
+//
+//   [3] Prediksi IPK (text-right flex-shrink-0)
+//       - <p> "Prediksi IPK": text-xs text-gray-400 dark:text-gray-500 mb-1
+//       - <p> nilai: text-2xl font-extrabold text-gray-900 dark:text-white tabular-nums
+//         Isi: {prediksi_ipk?.toFixed(2)}
+
+// STEP 4c: Progress bar SKS (di bawah baris atas, mt-4)
+// - Label row: flex justify-between text-xs text-gray-400 dark:text-gray-500 mb-1
+//   * <span>"Beban SKS"</span>
+//   * <span>"{rekomendasi_sks} / 24 SKS maksimum"</span>
+// - Track bar: w-full bg-gray-100 dark:bg-gray-700 rounded-full h-2.5 overflow-hidden
+//   * Fill bar: h-full rounded-full bg-gradient-to-r ${config.color} transition-all duration-700
+//     style={{ width: `${(rekomendasi_sks / 24) * 100}%` }}
+//     → Hitung persentase: (rekomendasi_sks / 24) * 100
+
+// ─── CATATAN PENTING ──────────────────────────────────────────────────────────
+// - bg-clip-text text-transparent: teknik gradient text di Tailwind
+//   Harus pakai bg-gradient-to-r + bg-clip-text + text-transparent bersamaan
+// - config.color dipakai untuk: icon bg, angka SKS gradient, progress bar fill
+// - config.bg dipakai untuk: card background dan badge background
+// - config.border dipakai untuk: card border dan badge border
+// - config.text dipakai untuk: badge text color dan deskripsi text color
+// - prediksi_ipk?.toFixed(2): optional chaining karena bisa undefined
+// - Komponen ini dipakai di Dashboard.jsx section prediksi summary
