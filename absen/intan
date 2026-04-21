@@ -1,2 +1,2 @@
-role:
-tugas kamu apa:
+role:frontend
+tugas kamu apa: frontend/src/pages/Dashboard.jsx
